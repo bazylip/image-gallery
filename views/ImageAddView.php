@@ -1,7 +1,7 @@
 <?php
 
 class ImageAddView {
-    public function render(){
+    public function view(){
         include '../layouts/addImage.php';
     }
 }

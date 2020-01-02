@@ -7,6 +7,7 @@ require_once '../Router.php';
 
 $router = new Router();
 $router->get('/image/add', 'ImageController::addImage');
+$router->errors('404', 'ErrorController::Error404');
 
-$view = $router->dispatch();
-$view->render();
+$view = $router->resolve();
+$view->view();

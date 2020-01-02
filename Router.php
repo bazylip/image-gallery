@@ -15,11 +15,19 @@ class Router {
         $this->get_[$path] = $call;
     }
 
-    public function dispatch(){
+    public function errors($path, $call){
+        $this->errors_[$path] = $call;
+    }
+
+    public function resolve(){
         $path = explode('?', $_SERVER['REQUEST_URI'])[0];
         $method = strtolower($_SERVER['REQUEST_METHOD']."_");
 
-        $call = explode('::', $this->$method[$path]);
+        if(isset($this->$method) && isset($this->$method[$path])) {
+            $call = explode('::', $this->$method[$path]);
+        }else{
+            $call = explode('::', $this->errors_['404']);
+        }
         $controllerName = $call[0];
         $action = $call[1];
 
