@@ -7,6 +7,7 @@
 <body>
     <form action="/image/send" method="post">
         <input type="text" name="title" placeholder="Title">
+        <input type="text" name="author" placeholder="Author">
         <input type="file" name="image" value="Image">
         <br/>
         <input type="submit" name="button" value="Send">

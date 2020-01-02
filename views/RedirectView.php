@@ -1,16 +1,22 @@
 <?php
 
 class RedirectView {
-    private $path_;
-    private $code_;
+    private $path;
+    private $code;
 
-    public function __construct($path, $code) {
-        $this->path_ = $path;
-        $this->code_ = $code;
-    }
+	/**
+	 * RedirectView constructor.
+	 * @param $path
+	 * @param $code
+	 */
+	public function __construct($path, $code) {
+		$this->path = $path;
+		$this->code = $code;
+	}
 
-    public function view(){
-        http_response_code($this->code_);
-        header("Location: {$this->path_}");
+
+	public function view(){
+        http_response_code($this->code);
+        header("Location: {$this->path}");
     }
 }
