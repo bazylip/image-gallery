@@ -5,9 +5,11 @@
     <title></title>
 </head>
 <body>
-    <form action="">
-        <input type="text" name="Title" placeholder="Title">
-        <input type="button" name="Send" value="Send">
+    <form action="/image/send" method="post">
+        <input type="text" name="title" placeholder="Title">
+        <input type="file" name="image" value="Image">
+        <br/>
+        <input type="submit" name="button" value="Send">
     </form>
 </body>
 </html>

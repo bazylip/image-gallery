@@ -15,6 +15,10 @@ class Router {
         $this->get_[$path] = $call;
     }
 
+    public function post($path, $call){
+        $this->post_[$path] = $call;
+    }
+
     public function errors($path, $call){
         $this->errors_[$path] = $call;
     }
