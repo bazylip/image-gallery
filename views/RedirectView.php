@@ -14,7 +14,6 @@ class RedirectView {
 		$this->code = $code;
 	}
 
-
 	public function view(){
         http_response_code($this->code);
         header("Location: {$this->path}");
