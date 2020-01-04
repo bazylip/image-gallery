@@ -3,6 +3,7 @@
 class GallerySliceView{
 
 	private $pageNumber;
+	private $maxPageNumber;
 	private $pageSize = 3;
 
 	/**
@@ -11,6 +12,7 @@ class GallerySliceView{
 	 */
 	public function __construct($page_) {
 		$this->pageNumber = $page_;
+		$this->maxPageNumber = ceil(((count(scandir('../web/images')) - 2) / 3) / $this->pageSize - 1);
 	}
 
 	private function filterThumbnails($var){

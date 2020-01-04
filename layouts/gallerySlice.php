@@ -10,7 +10,7 @@
         <?php endforeach; ?>
     </ul>
 
-    <a href="/gallery?page=<?= ($this->pageNumber)-1 ?>">Previous page</a>
-    <a href="/gallery?page=<?= ($this->pageNumber)+1 ?>">Next page</a>
+    <?php if ($this->pageNumber > 0) echo '<a href="/gallery?page=' . strval(($this->pageNumber)-1) . '">Previous page</a>' ?>
+    <?php if ($this->pageNumber < $this->maxPageNumber) echo '<a href="/gallery?page=' . strval(($this->pageNumber)+1) . '">Next page</a>' ?>
 </body>
 </html>
