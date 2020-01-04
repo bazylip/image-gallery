@@ -4,6 +4,7 @@
 require_once '../controllers/ImageController.php';
 // Other requires
 require_once '../Router.php';
+require_once '../vendor/autoload.php';
 
 $router = new Router();
 

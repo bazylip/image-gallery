@@ -1,5 +1,7 @@
 <?php
 
+require_once '../models/Database.php';
+
 class GallerySliceView{
 
 	private $pageNumber;
@@ -24,6 +26,27 @@ class GallerySliceView{
 		$images = scandir($path);
 		$images = array_filter($images, array($this, 'filterThumbnails'));
 		$images = array_slice($images, ($this->pageNumber) * ($this->pageSize), $this->pageSize);
+
 		include '../layouts/gallerySlice.php';
+	}
+
+	public function getTitle($id){
+		$query = [
+			'imageId' => intval($id)
+		];
+		$cursor = Database::get()->info->find($query);
+		foreach ($cursor as $member){
+			return $member['title'];
+		}
+	}
+
+	public function getAuthor($id){
+		$query = [
+			'imageId' => intval($id)
+		];
+		$cursor = Database::get()->info->find($query);
+		foreach ($cursor as $member){
+			return $member['author'];
+		}
 	}
 }

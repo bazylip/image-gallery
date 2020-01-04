@@ -1,11 +1,15 @@
 <?php
 
+require_once 'Database.php';
+
 define('KB', 1024);
 
 class Image {
     private $id;
     private $title;
     private $author;
+
+    //private $infoId;
     private $extension;
     private $uploadName;
     private $uploadTmpName;
@@ -17,7 +21,7 @@ class Image {
     private $path;
 
 	public function __construct($title_, $author_, $uploadName_, $uploadTmpName_, $uploadSize_, $watermark_) {
-		$this->id = count(scandir('../web/images')) - 2;
+		$this->id = (count(scandir('../web/images')) - 2) / 3;
 		$this->title = $title_;
 		$this->author = $author_;
 		$this->uploadName = $uploadName_;
@@ -43,6 +47,7 @@ class Image {
 				if(move_uploaded_file($this->uploadTmpName, $this->path)){
 					$this->createWatermarkCopy();
 					$this->createThumbnail();
+					$this->saveInfoToDatabase();
 					return 0;
 				}else{
 					return 1;
@@ -83,5 +88,16 @@ class Image {
 		($this->extension == "jpg") ? $image = imagecreatefromjpeg($this->path) : $image = imagecreatefrompng($this->path);
 		$resizedImage = imagescale($image, 200, 125);
 		($this->extension == "jpg") ? imagejpeg($resizedImage, $this->dest . $this->id . "t." . $this->extension) : imagepng($image, $this->dest . $this->id . "t." . $this->extension);
+	}
+
+	private function saveInfoToDatabase(){
+		//Database::get()->info->drop();
+		$response = Database::get()->info->insertOne([
+			'imageId' => $this->id,
+			'title' => $this->title,
+			'author' => $this->author
+		]);
+
+		//$this->infoId = $response->getInsertedId();
 	}
 }

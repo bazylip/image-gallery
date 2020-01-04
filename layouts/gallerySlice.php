@@ -6,7 +6,12 @@
 <body>
     <ul>
         <?php foreach ($images as $image): ?>
-            <li><?php echo '<a href="/image/show?imageId=' . substr($image, 0, 1) . 'w">' . '<img src="/image/show?imageId=' . substr($image, 0, -4) . '" /></a>'; ?></li>
+            <li>
+                <?php $id = substr($image, 0, strlen($image)-5); ?>
+                <?php echo '<a href="/image/show?imageId=' . $id . 'w">' . '<img src="/image/show?imageId=' . $id . 't" /></a>'; ?>
+                <?php echo '<p>Tytuł: ' . $this->getTitle($id) . '</p>'?>
+				<?php echo '<p>Autor: ' . $this->getAuthor($id) . '</p>'?>
+            </li>
         <?php endforeach; ?>
     </ul>
 
