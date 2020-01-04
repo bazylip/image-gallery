@@ -5,6 +5,7 @@
 	<title></title>
 </head>
 <body>
+	<a href="/image/add">Go back to image upload</a>
 	<h1>Failed while saving image!</h1>
 	<h2>Errors:</h2>
 	<ul>

@@ -9,19 +9,23 @@ class Image {
     private $extension;
     private $uploadName;
     private $uploadTmpName;
-    private $uploadSize;
+    private $size;
+    private $watermark;
     private $dest = '../web/images/';
     private $maxSize = 1000*KB;
     private $allowedExt = array('jpg', 'png');
+    private $path;
 
-	public function __construct($title_, $author_, $uploadName_, $uploadTmpName_, $uploadSize_) {
+	public function __construct($title_, $author_, $uploadName_, $uploadTmpName_, $uploadSize_, $watermark_) {
 		$this->id = count(scandir('../web/images')) - 2;
 		$this->title = $title_;
 		$this->author = $author_;
 		$this->uploadName = $uploadName_;
 		$this->uploadTmpName = $uploadTmpName_;
-		$this->uploadSize = $uploadSize_;
-		$this->extension = pathinfo($this->uploadName, PATHINFO_EXTENSION);
+		$this->size = $uploadSize_;
+		$this->watermark = $watermark_;
+		$this->extension = strtolower(pathinfo($this->uploadName, PATHINFO_EXTENSION));
+		$this->path = $this->dest . $this->id . "." . $this->extension;
 	}
 
 	/**
@@ -36,7 +40,9 @@ class Image {
 	public function save(){
 		if ($this->checkCorrectSize()){
 			if ($this->checkCorrectExtension()){
-				if(move_uploaded_file($this->uploadTmpName, $this->dest . $this->id . "." . $this->extension)){
+				if(move_uploaded_file($this->uploadTmpName, $this->path)){
+					$this->createWatermarkCopy();
+					$this->createThumbnail();
 					return 0;
 				}else{
 					return 1;
@@ -55,7 +61,7 @@ class Image {
 	 * false 	-> file size incorrect
 	 */
 	private function checkCorrectSize(){
-		return ($this->uploadSize < $this->maxSize);
+		return ($this->size < $this->maxSize);
 	}
 
 	/**
@@ -64,6 +70,18 @@ class Image {
 	 * false	-> file extension incorrect
 	 */
 	private function checkCorrectExtension(){
-		return (in_array(strtolower($this->extension), $this->allowedExt));
+		return (in_array($this->extension, $this->allowedExt));
+	}
+
+	private function createWatermarkCopy(){
+		($this->extension == "jpg") ? $image = imagecreatefromjpeg($this->path) : $image = imagecreatefrompng($this->path);
+		imagestring($image, 5, 0, 0, $this->watermark, imagecolorallocate($image, 0, 0, 0));
+		($this->extension == "jpg") ? imagejpeg($image, $this->dest . $this->id . "w." . $this->extension) : imagepng($image, $this->dest . $this->id . "w." . $this->extension);
+	}
+
+	private function createThumbnail(){
+		($this->extension == "jpg") ? $image = imagecreatefromjpeg($this->path) : $image = imagecreatefrompng($this->path);
+		$resizedImage = imagescale($image, 200, 125);
+		($this->extension == "jpg") ? imagejpeg($resizedImage, $this->dest . $this->id . "t." . $this->extension) : imagepng($image, $this->dest . $this->id . "t." . $this->extension);
 	}
 }
