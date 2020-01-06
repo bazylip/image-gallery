@@ -7,20 +7,16 @@ require_once '../views/Error404View.php';
 class GalleryController{
 
 	public function showSlice(){
-		(isset($_GET['page'])) ? $page = $_GET['page'] : $page = 0;
-		if ($page < 0) {
-			return new Error404View();
-		}else{
-			return new GallerySliceView($page);
-		}
+		$page = $this->getPage();
+		return $page < 0 ? new Error404View() : new GallerySliceView($page);
 	}
 
 	public function showSelected(){
-		(isset($_GET['page'])) ? $page = $_GET['page'] : $page = 0;
-		if ($page < 0) {
-			return new Error404View();
-		}else{
-			return new GallerySelectedView($page);
-		}
+		$page = $this->getPage();
+		return $page < 0 ? new Error404View() : new GallerySelectedView($page);
+	}
+
+	private function getPage(){
+		return (isset($_GET['page'])) ? $_GET['page'] : 0;
 	}
 }

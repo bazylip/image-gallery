@@ -52,11 +52,12 @@ class GallerySliceView{
 	public function view(){
 		$images = $this->getImages();
 		$this->maxPageNumber = ceil((count($images)) / $this->pageSize - 1);
+		$this->pageNumber = $this->validatePageNumber();
 		$images = array_slice($images, ($this->pageNumber) * ($this->pageSize), $this->pageSize);
 		include '../layouts/gallerySlice.php';
 	}
 
-	public function getTitle($id){
+	private function getTitle($id){
 		$query = [
 			'imageId' => intval($id)
 		];
@@ -66,7 +67,7 @@ class GallerySliceView{
 		}
 	}
 
-	public function getAuthor($id){
+	private function getAuthor($id){
 		$query = [
 			'imageId' => intval($id)
 		];
@@ -74,5 +75,9 @@ class GallerySliceView{
 		foreach ($cursor as $member){
 			return $member['author'];
 		}
+	}
+
+	private function validatePageNumber(){
+		return $this->pageNumber > $this->maxPageNumber ? $this->maxPageNumber : $this->pageNumber;
 	}
 }
