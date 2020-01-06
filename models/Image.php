@@ -8,6 +8,7 @@ class Image {
     private $id;
     private $title;
     private $author;
+    private $privacy;
 
     //private $infoId;
     private $extension;
@@ -20,10 +21,11 @@ class Image {
     private $allowedExt = array('jpg', 'png');
     private $path;
 
-	public function __construct($title_, $author_, $uploadName_, $uploadTmpName_, $uploadSize_, $watermark_) {
+	public function __construct($title_, $author_, $privacy_, $uploadName_, $uploadTmpName_, $uploadSize_, $watermark_) {
 		$this->id = (count(scandir('../web/images')) - 2) / 3;
 		$this->title = $title_;
 		$this->author = $author_;
+		$this->privacy = $privacy_;
 		$this->uploadName = $uploadName_;
 		$this->uploadTmpName = $uploadTmpName_;
 		$this->size = $uploadSize_;
@@ -95,7 +97,8 @@ class Image {
 		$response = Database::get()->info->insertOne([
 			'imageId' => $this->id,
 			'title' => $this->title,
-			'author' => $this->author
+			'author' => $this->author,
+			'privacy' => $this->privacy
 		]);
 
 		//$this->infoId = $response->getInsertedId();

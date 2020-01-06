@@ -11,6 +11,8 @@ class GallerySelectedView extends GallerySliceView{
 		$images = scandir($path);
 		$images = array_filter($images, array($this, 'filterSelected'));
 		$this->maxPageNumber = $this->maxPageNumber = ceil((count($images)) / $this->pageSize - 1);
-		return array_filter($images, array($this, 'filterThumbnails'));
+		$images = array_filter($images, array($this, 'filterThumbnails'));
+		$images = array_filter($images, array($this, 'filterPrivate'));
+		return $images;
 	}
 }

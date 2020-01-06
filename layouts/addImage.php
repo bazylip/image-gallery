@@ -6,12 +6,18 @@
 </head>
 <body>
     <form action="/image/send" method="post" enctype="multipart/form-data">
-        <input type="text" name="title" placeholder="Title">
-        <input type="text" name="author" placeholder="Author">
-        <input type="text" name="watermark" placeholder="Watermark" required>
-        <input type="file" name="image" required>
+        <p><input type="text" name="title" placeholder="Title"></p>
+        <p><input type="text" name="author" placeholder="Author" value="<?= $this->getUser() ?>"></p>
+        <p><input type="text" name="watermark" placeholder="Watermark" required></p>
+        <p><input type="file" name="image" required></p>
+        <?php
+            if($this->isLogged()){
+                echo '<p><label><input type="radio" name="privacy" value="public" checked>Public</label>
+                        <label><input type="radio" name="privacy" value="private">Private</label></p>';
+            }
+        ?>
         <br/>
-        <input type="submit" name="button" value="Send">
+        <p><input type="submit" name="button" value="Send"></p>
     </form>
 </body>
 </html>

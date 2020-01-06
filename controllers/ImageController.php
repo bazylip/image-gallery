@@ -14,11 +14,12 @@ class ImageController {
         $title = $_POST['title'];
         $author = $_POST['author'];
         $watermark = $_POST['watermark'];
+		isset($_POST['privacy']) ? $privacy = $_POST['privacy'] : $privacy = 'public';
         $name = $_FILES['image']['name'];
         $tmp_name = $_FILES['image']['tmp_name'];
         $size = $_FILES['image']['size'];
 
-        $image = new Image($title, $author, $name, $tmp_name, $size, $watermark);
+        $image = new Image($title, $author, $privacy, $name, $tmp_name, $size, $watermark);
         $returnCode = $image->save();
 
         if($returnCode == 0) {

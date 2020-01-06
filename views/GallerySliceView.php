@@ -20,10 +20,33 @@ class GallerySliceView{
 		return strpos($var, 't') !== false;
 	}
 
+	protected function filterPrivate($var){
+		$id = substr($var, 0, strlen($var)-5);
+		$cursor = Database::get()->info->find(['imageId' => intval($id)]);
+
+		foreach($cursor as $info){
+
+			if($this->isLogged()){
+				if($info['privacy'] == 'private'){
+					return $info['author'] == $this->getAuthor($id);
+				}
+				return true;
+			}else{
+				return $info['privacy'] == 'public';
+			}
+		}
+	}
+
+	private function isLogged(){
+		return isset($_SESSION['user_id']);
+	}
+
 	protected function getImages(){
 		$path = '../web/images';
 		$images = scandir($path);
-		return array_filter($images, array($this, 'filterThumbnails'));
+		$images = array_filter($images, array($this, 'filterThumbnails'));
+		$images = array_filter($images, array($this, 'filterPrivate'));
+		return $images;
 	}
 
 	public function view(){

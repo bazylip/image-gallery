@@ -22,7 +22,6 @@ class UserController{
 		$login = $_POST['login'];
 		$password = $_POST['password'];
 		$passwordRepeat = $_POST['passwordRepeat'];
-		session_start();
 		$_SESSION['errors'] = [];
 
 		if(!$this->checkFreeEmail($email)){
@@ -65,7 +64,6 @@ class UserController{
 		$user = $db->users->findOne(['login' => $login]);
 
 		if(!$user !== null && password_verify($password, $user['password'])){
-			session_start();
 			session_regenerate_id();
 			$_SESSION['user_id'] = $user['_id'];
 			return new RedirectView('/user/logged', 303);
