@@ -14,7 +14,14 @@ class UserController{
 	}
 
 	public function login(){
-		return new UserLoginView();
+		return !$this->isLogged() ? new UserLoginView() : new RedirectView('/gallery', 303);
+	}
+
+	public function logout(){
+		if ($this->isLogged()){
+			session_destroy();
+		}
+		return new RedirectView('/gallery', 303);
 	}
 
 	public function addUser(){
@@ -94,5 +101,9 @@ class UserController{
 
 	private function checkRepeatedPassword($password, $passwordRepeat){
 		return $password === $passwordRepeat;
+	}
+
+	private function isLogged(){
+		return isset($_SESSION['user_id']);
 	}
 }

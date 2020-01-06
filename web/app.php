@@ -19,6 +19,7 @@ $router->get('/user/login', 'UserController::login');
 $router->get('/user/added', 'UserController::added');
 $router->get('/user/addError', 'ErrorController::ErrorAddUser');
 $router->get('/user/logged', 'UserController::logged');
+$router->get('/user/logout', 'UserController::logout');
 $router->get('/gallery/selected', 'GalleryController::showSelected');
 $router->post('/image/send', 'ImageController::sendImage');
 $router->post('/user/add', 'UserController::addUser');
