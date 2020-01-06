@@ -5,8 +5,8 @@ require_once '../models/Database.php';
 class GallerySliceView{
 
 	private $pageNumber;
-	private $maxPageNumber;
-	private $pageSize = 3;
+	protected $maxPageNumber;
+	protected $pageSize = 3;
 
 	/**
 	 * GallerySliceView constructor.
@@ -14,19 +14,22 @@ class GallerySliceView{
 	 */
 	public function __construct($page_) {
 		$this->pageNumber = $page_;
-		$this->maxPageNumber = ceil(((count(scandir('../web/images')) - 2) / 3) / $this->pageSize - 1);
 	}
 
-	private function filterThumbnails($var){
+	protected function filterThumbnails($var){
 		return strpos($var, 't') !== false;
 	}
 
-	public function view(){
+	protected function getImages(){
 		$path = '../web/images';
 		$images = scandir($path);
-		$images = array_filter($images, array($this, 'filterThumbnails'));
-		$images = array_slice($images, ($this->pageNumber) * ($this->pageSize), $this->pageSize);
+		return array_filter($images, array($this, 'filterThumbnails'));
+	}
 
+	public function view(){
+		$images = $this->getImages();
+		$this->maxPageNumber = ceil((count($images)) / $this->pageSize - 1);
+		$images = array_slice($images, ($this->pageNumber) * ($this->pageSize), $this->pageSize);
 		include '../layouts/gallerySlice.php';
 	}
 

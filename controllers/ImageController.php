@@ -24,6 +24,7 @@ class ImageController {
         if($returnCode == 0) {
 			return new RedirectView('/image/add', 303);
 		}else{
+        	ob_start();
         	session_start();
         	switch($returnCode){
 				case -1:

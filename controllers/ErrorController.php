@@ -9,14 +9,12 @@ class ErrorController {
     }
 
     public function ErrorSaveImage(){
-    	session_start();
     	$errors = $_SESSION['errors'];
     	unset($_SESSION['errors']);
     	return new ErrorSaveView($errors);
 	}
 
 	public function ErrorAddUser(){
-    	session_start();
     	$errors = $_SESSION['errors'];
     	unset($_SESSION['errors']);
     	return new UserAddErrorView($errors);
