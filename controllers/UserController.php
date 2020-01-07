@@ -11,7 +11,7 @@ class UserController{
 
 	public function register(){
 		$referer = str_replace("http://192.168.56.10:8080", "", $_SERVER['HTTP_REFERER']);
-		if(isset($_SESSION['referer']) && $referer != '/user/addError'){
+		if(!isset($_SESSION['referer']) && $referer != '/user/addError'){
 			$_SESSION['referer'] = $referer;
 		}
 		return new UserRegisterView();
@@ -19,7 +19,7 @@ class UserController{
 
 	public function login(){
 		$referer = str_replace("http://192.168.56.10:8080", "", $_SERVER['HTTP_REFERER']);
-		if(isset($_SESSION['referer']) && $referer != '/user/login'){
+		if(!isset($_SESSION['referer']) && $referer != '/user/login'){
 			$_SESSION['referer'] = $referer;
 		}
 		return !$this->isLogged() ? new UserLoginView() : new RedirectView('/gallery', 303);

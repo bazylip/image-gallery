@@ -16,16 +16,15 @@
                     <?= (isset($_SESSION['picks']) && in_array($id, $_SESSION['picks']) && get_class($this) == 'GallerySliceView') ? '<input type="checkbox" name="picks[]" value="'. $id .'" checked>' : '<input type="checkbox" name="picks[]" value="'. $id .'">' ?>
                 </li>
             <?php endforeach; ?>
-
         </ul>
         <?= get_class($this) == 'GallerySliceView' ? '<input type="submit" name="button" value="Remember checked images">' : '<input type="submit" name="button" value="Forget checked images">' ?>
     </form>
     <?php
     if(get_class($this) == 'GallerySliceView'){
-        if ($this->pageNumber > 0) echo '<a href="/gallery?page=' . strval(($this->pageNumber)-1) . '">Previous page</a>';
+        if ($this->pageNumber > 0) echo '<a href="/gallery?page=' . strval(($this->pageNumber)-1) . '">Previous page</a> ';
         if ($this->pageNumber < $this->maxPageNumber) echo '<a href="/gallery?page=' . strval(($this->pageNumber)+1) . '">Next page</a>';
     }else{
-		if ($this->pageNumber > 0) echo '<a href="/gallery/selected?page=' . strval(($this->pageNumber)-1) . '">Previous page</a>';
+		if ($this->pageNumber > 0) echo '<a href="/gallery/selected?page=' . strval(($this->pageNumber)-1) . '">Previous page</a> ';
 		if ($this->pageNumber < $this->maxPageNumber) echo '<a href="/gallery/selected?page=' . strval(($this->pageNumber)+1) . '">Next page</a>';
 	}
     ?>
