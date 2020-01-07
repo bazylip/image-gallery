@@ -5,5 +5,6 @@
 </head>
 <body>
 	<h1>User successfully added!</h1>
+	<?= '<a href="'.$_SESSION['referer'].'">Go back</a>' ?>
 </body>
 </html>
