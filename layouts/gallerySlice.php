@@ -4,6 +4,7 @@
     <title>Gallery</title>
 </head>
 <body>
+    <?php include 'header.php' ?>
     <form action=<?= get_class($this) == 'GallerySliceView' ? "/session/saveChoice?page=".$this->pageNumber : "/session/forgetChoice?page=".$this->pageNumber?> method="post">
         <ul>
             <?php foreach ($images as $image): ?>

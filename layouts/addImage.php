@@ -5,6 +5,7 @@
     <title></title>
 </head>
 <body>
+    <?php include 'header.php' ?>
     <form action="/image/send" method="post" enctype="multipart/form-data">
         <p><input type="text" name="title" placeholder="Title"></p>
         <p><input type="text" name="author" placeholder="Author" value="<?= $this->getUser() ?>"></p>
