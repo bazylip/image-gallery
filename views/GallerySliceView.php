@@ -25,7 +25,6 @@ class GallerySliceView{
 		$cursor = Database::get()->info->find(['imageId' => intval($id)]);
 
 		foreach($cursor as $info){
-
 			if($this->isLogged()){
 				if($info['privacy'] == 'private'){
 					return $info['author'] == $this->getAuthor($id);

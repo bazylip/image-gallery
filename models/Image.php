@@ -89,7 +89,7 @@ class Image {
 	private function createThumbnail(){
 		($this->extension == "jpg") ? $image = imagecreatefromjpeg($this->path) : $image = imagecreatefrompng($this->path);
 		$resizedImage = imagescale($image, 200, 125);
-		($this->extension == "jpg") ? imagejpeg($resizedImage, $this->dest . $this->id . "t." . $this->extension) : imagepng($image, $this->dest . $this->id . "t." . $this->extension);
+		($this->extension == "jpg") ? imagejpeg($resizedImage, $this->dest . $this->id . "t." . $this->extension) : imagepng($resizedImage, $this->dest . $this->id . "t." . $this->extension);
 	}
 
 	private function saveInfoToDatabase(){

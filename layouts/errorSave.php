@@ -10,7 +10,7 @@
 	<h2>Errors:</h2>
 	<ul>
 		<?php foreach ($this->errors as $error): ?>
-			<li><h3><?= ($error == 'size') ? "Image too big" : "Incorrect file extension" ?></h3></li>
+			<li><h3><?= ($error == 'size') ? "Image too big" : ($error == 'ext') ? "Incorrect file extension" : "Failed to save (does file name contain special characters?)" ?></h3></li>
 		<?php endforeach; ?>
 	</ul>
 </body>

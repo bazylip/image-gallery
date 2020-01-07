@@ -28,6 +28,9 @@ class ImageController {
         	ob_start();
         	session_start();
         	switch($returnCode){
+				case 1:
+					$_SESSION['errors'] = ['fail'];
+					break;
 				case -1:
 					$_SESSION['errors'] = ['size'];
 					break;
